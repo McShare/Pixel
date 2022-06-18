@@ -59,13 +59,18 @@
 			if (this.onerror) this.onerror(event);
 		}.bind(this);
 
+		this.socket.ping = function(event){
+			this.socket.send('{"action":"ping"}');
+			console.log('ping!');
+		}.bind(this);
+
 		this.socket.onopen = function(event) {
 			console.log("PixelSocket opened");
 			if (this.onopen) this.onopen(event);
 			this.requestRefresh();
 
-			setInterval(function() {
-				this.socket.send('{"action":"ping"}')
+			setInterval(()=> {
+				this.socket.ping();
 			}, 15000);
 		}.bind(this);
 	};
